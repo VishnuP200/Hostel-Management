@@ -93,6 +93,7 @@ public class RoomService {
 	}
 
 	public String addRooms(List<RoomDTO> roomDTOs) {
+		System.out.println("Entering into rooms");
 		List<errordtls> err = new ArrayList<>();
 
 		List<Room> rooms = roomDTOs.stream().map(dto -> {
@@ -101,14 +102,17 @@ public class RoomService {
 				Room room = modelMapper.map(dto, Room.class);
 				room.setRoomId(id);
 				return room;
+			
 			} else {
 				err.add(new errordtls("err2", "hostelId is not exisits in hostelMS", dto.getHostelId().toString()));
 				return null;
 			}
+			
 		}).filter(Objects::nonNull).collect(Collectors.toList());
 
 		if (!err.isEmpty()) {
-			throw new ResourceNotFoundException(err);
+//			throw new ResourceNotFoundException(err);
+			throw new RuntimeException();
 		}
 
 		roomRepository.saveAll(rooms);

@@ -20,5 +20,10 @@ public class GlobalexceptionClass {
 	public ResponseEntity<String> handleException(Exception ex) {
 		return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
 	}
+	@ExceptionHandler(RuntimeException.class)
+	public ResponseEntity<String> handleException(RuntimeException ex) {
+	    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+	                         .body(ex.getMessage());
+	}
 
 }

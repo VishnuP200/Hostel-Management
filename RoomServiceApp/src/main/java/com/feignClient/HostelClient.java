@@ -6,9 +6,11 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.fallback.HostelServiceFallback;
+
 import jakarta.validation.Valid;
 
-@FeignClient(name = "PGserviceApplication")
+@FeignClient(name = "PGserviceApplication",fallback = HostelServiceFallback.class)
 public interface HostelClient {
 
 	@GetMapping("/myapp/api/hostels/exisits")
