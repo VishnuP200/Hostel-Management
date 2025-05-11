@@ -111,8 +111,7 @@ public class RoomService {
 		}).filter(Objects::nonNull).collect(Collectors.toList());
 
 		if (!err.isEmpty()) {
-//			throw new ResourceNotFoundException(err);
-			throw new RuntimeException();
+			throw new ResourceNotFoundException(err);
 		}
 
 		roomRepository.saveAll(rooms);
