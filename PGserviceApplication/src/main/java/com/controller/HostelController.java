@@ -68,9 +68,6 @@ public class HostelController {
 	@GetMapping("/exisits")
 	public boolean hostelExisits(@RequestParam Long hostelId) {
 		System.out.println("In hostelMs --"+ hostelId);
-		if(hostelId == 20L) {
-			throw new RuntimeException("hostelId is not valid");
-		}
 		return hostelService.hostelExsists(hostelId);
 	}
 

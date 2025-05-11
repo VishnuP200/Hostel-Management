@@ -3,21 +3,36 @@ package com.util;
 import java.security.Key;
 import java.util.Date;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
+import jakarta.annotation.PostConstruct;
 
 @Component
 public class JWTUtil {
 	
-	private final String secretKey = "7f92b7f5bb8b4acbb9b4d7a68f8f7b30";
-	private final long expiration = 1000*60*60;
-	private final Key key = Keys.hmacShaKeyFor(secretKey.getBytes());
+	@Value("${jwt.secret}")
+	private String secretKey;
+
+	@Value("${jwt.expiration}")
+	private long expiration;
+
+	
+	 private Key key;
+	 
+	@PostConstruct
+    public void init() {
+        System.out.println("Injected secret key: " + secretKey);
+        System.out.println("Injected expiration: " + expiration);
+        key = Keys.hmacShaKeyFor(secretKey.getBytes());
+    }
 	
 	public String generateAuthToken(String userName) {
+		System.out.println("secretkey"+secretKey);
 		return Jwts.builder().
 				setSubject(userName).
 				setIssuedAt(new Date())
